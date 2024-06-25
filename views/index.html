@@ -4,11 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
-    <span>Count</span> 
+    {{ template "form" . }}
+    <hr />
+    {{ template "display" . }}
 </body>
 </html>
 
+{{ end }}
+
+{{ block "count" . }}
+    Count {{ .Count }}
+{{ end }}
+
+{{ block "form" . }}
+    <form hx-target="body" hx-post="/contacts">
+        name: <input type="text" name="name" />
+        email: <input type="text" name="email" />
+        <button type="submit">Create contact</button>
+    </form>
+{{ end }}
+
+{{ block "display" . }}
+    <div style="display: flex; flex-direction: column">
+        {{ range .Contacts }}
+            <div>
+                Name: <span>{{ .Name }}</span>
+                Email: <span>{{ .Email }}</span>
+            </div>
+        {{ end }}
+    </div>
 {{ end }}

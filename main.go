@@ -28,6 +28,37 @@ type Block struct {
 	Id int
 }
 
+type Count struct {
+	Count int
+}
+
+type Contact struct {
+	Name  string
+	Email string
+}
+
+func NewContact(name, email string) Contact {
+	return Contact{
+		Name:  name,
+		Email: email,
+	}
+}
+
+type Contacts = []Contact
+
+type Data struct {
+	Contacts Contacts
+}
+
+func NewData() Data {
+	return Data{
+		Contacts: []Contact{
+			NewContact("Juan", "juan@example.com"),
+			NewContact("Pedro", "pedro@example.com"),
+		},
+	}
+}
+
 type Blocks struct {
 	Start  int
 	Next   int
@@ -39,6 +70,27 @@ func main() {
 	e := echo.New()
 	e.Renderer = NewTemplates()
 	e.Use(middleware.Logger())
+
+	count := Count{Count: 0}
+	data := NewData()
+
+	e.GET("/", func(c echo.Context) error {
+		// count.Count++
+		return c.Render(200, "index", data)
+	})
+
+	e.POST("/count", func(c echo.Context) error {
+		count.Count++
+		return c.Render(200, "count", count)
+	})
+
+	e.POST("/contacts", func(c echo.Context) error {
+		name := c.FormValue("name")
+		email := c.FormValue("email")
+
+		data.Contacts = append(data.Contacts, NewContact(name, email))
+		return c.Render(200, "index", data)
+	})
 
 	e.GET("/blocks", func(c echo.Context) error {
 		startStr := c.QueryParam("start")
