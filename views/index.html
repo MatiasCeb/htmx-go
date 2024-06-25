@@ -8,9 +8,9 @@
     <title>Document</title>
 </head>
 <body>
-    {{ template "form" . }}
+    {{ template "form" .Form }}
     <hr />
-    {{ template "display" . }}
+    {{ template "display" .Data }}
 </body>
 </html>
 
@@ -21,15 +21,24 @@
 {{ end }}
 
 {{ block "form" . }}
-    <form hx-target="body" hx-post="/contacts">
-        name: <input type="text" name="name" />
-        email: <input type="text" name="email" />
+    <form hx-swap="outerHTML" hx-target="#contacts" hx-post="/contacts">
+        name: <input 
+            {{ if .Values.name }} value="{{ .Values.name }}" {{ end }}
+            type="text" name="name" />
+        email: <input 
+            {{ if .Values.email }} value="{{ .Values.email }}" {{ end }}
+            type="text" name="email" />
+
+        {{ if .Errors.email }}
+            <div style="color: red">{{ .Errors.email }}</div>
+        {{ end }}
+
         <button type="submit">Create contact</button>
     </form>
 {{ end }}
 
 {{ block "display" . }}
-    <div style="display: flex; flex-direction: column">
+    <div id="contacts" style="display: flex; flex-direction: column">
         {{ range .Contacts }}
             <div>
                 Name: <span>{{ .Name }}</span>
