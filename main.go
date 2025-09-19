@@ -132,6 +132,14 @@ func main() {
 		return c.Render(200, "index", page)
 	})
 
+	e.GET("/add-contact", func(c echo.Context) error {
+		return c.Render(200, "add-contact", page)
+	})
+
+	e.GET("/contacts", func(c echo.Context) error {
+		return c.Render(200, "contacts", page)
+	})
+
 	e.POST("/count", func(c echo.Context) error {
 		count.Count++
 		return c.Render(200, "count", count)

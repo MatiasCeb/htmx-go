@@ -51,73 +51,28 @@
 
 {{ block "blocks" . }}
 {{ range .Blocks }}
-    {{ $type := mod .Id 3 }}
-    {{ if eq $type 0 }}
-        <!-- Testimonial Block -->
-        <article class="block-item card fade-in testimonial" role="article" tabindex="0" aria-labelledby="testimonial-{{ .Id }}">
-            <div class="card-header">
-                <div class="flex items-center space-x-sm">
-                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-                        {{ slice (printf "%c" (add 65 (mod .Id 26))) 0 1 }}
-                    </div>
-                    <div>
-                        <h3 id="testimonial-{{ .Id }}" class="card-title text-lg">John Doe</h3>
-                        <p class="text-secondary text-sm">CEO, Tech Company</p>
-                    </div>
+    <!-- Testimonial Block -->
+    <article class="block-item card fade-in testimonial" role="article" tabindex="0" aria-labelledby="testimonial-{{ .Id }}">
+        <div class="card-header">
+            <div class="flex items-center space-x-sm">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                    U
+                </div>
+                <div>
+                    <h3 id="testimonial-{{ .Id }}" class="card-title text-lg">User {{ .Id }}</h3>
+                    <p class="text-secondary text-sm">Happy Customer</p>
                 </div>
             </div>
-            <div class="card-content">
-                <blockquote class="text-secondary italic">
-                    "This platform has revolutionized how we manage our contacts. The clean design and smooth performance are outstanding."
-                </blockquote>
-                <div class="flex text-accent mt-sm" aria-label="5 star rating">
-                    ★★★★★
-                </div>
+        </div>
+        <div class="card-content">
+            <blockquote class="text-secondary italic">
+                "This platform has revolutionized how we manage our contacts. The clean design and smooth performance are outstanding."
+            </blockquote>
+            <div class="flex text-accent mt-sm" aria-label="5 star rating">
+                ★★★★★
             </div>
-        </article>
-    {{ else if eq $type 1 }}
-        <!-- Feature Block -->
-        <article class="block-item card fade-in feature" role="article" tabindex="0" aria-labelledby="feature-{{ .Id }}">
-            <div class="card-header">
-                <div class="w-16 h-16 rounded-lg bg-secondary flex items-center justify-center mb-md">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                    </svg>
-                </div>
-                <h3 id="feature-{{ .Id }}" class="card-title">Lightning Fast</h3>
-            </div>
-            <div class="card-content">
-                <p class="text-secondary">
-                    Experience blazing-fast performance with our optimized architecture and smooth animations.
-                </p>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="btn-ghost btn-sm" aria-label="Learn more about lightning fast feature">Learn More</a>
-            </div>
-        </article>
-    {{ else }}
-        <!-- Gallery Block -->
-        <article class="block-item card fade-in gallery" role="article" tabindex="0" aria-labelledby="gallery-{{ .Id }}">
-            <div class="card-header">
-                <h3 id="gallery-{{ .Id }}" class="card-title">Gallery Item {{ .Id }}</h3>
-            </div>
-            <div class="card-content">
-                <div class="aspect-video bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="9" cy="9" r="2"/>
-                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                    </svg>
-                </div>
-                <p class="text-secondary mt-md">
-                    Beautiful gallery item showcasing our design capabilities.
-                </p>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-sm" aria-label="View gallery item {{ .Id }}">View</button>
-            </div>
-        </article>
-    {{ end }}
+        </div>
+    </article>
 {{ end }}
 
 {{ if .More }}

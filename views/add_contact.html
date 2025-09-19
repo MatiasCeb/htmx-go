@@ -1,0 +1,105 @@
+{{ block "add-contact" . }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Contact - Contact Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add a new contact to your contact manager">
+    <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <header class="nav" role="banner">
+        <div class="container flex justify-between items-center">
+            <h1 class="text-xl font-semibold">Contact Manager</h1>
+            <nav aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/contacts" class="nav-link">Contacts</a></li>
+                    <li><a href="/add-contact" class="nav-link active">Add Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="add-contact" class="container my-3xl" aria-labelledby="form-title">
+            <div class="card fade-in">
+                <div class="card-header">
+                    <h3 id="form-title" class="card-title">Add New Contact</h3>
+                    <p class="card-content">Fill in the details below to create a new contact entry.</p>
+                </div>
+                <div class="card-content">
+                    {{ template "form" .Form }}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            document.body.addEventListener('htmx:beforeSwap', function(evt){
+                if (evt.detail.xhr.status === 422) {
+                    // allow 422 responses to swap as we are using this as a signal that
+                    // a form was submitted with bad data and want to rerender with the errors
+                    //
+                    // set isError to false to avoid error logging in console
+                    evt.detail.shouldSwap = true;
+                    evt.detail.isError = false;
+                }
+            });
+
+            // After successful form submission, redirect to contacts page
+            document.body.addEventListener('htmx:afterSwap', function(evt) {
+                if (evt.detail.target.tagName === 'FORM' && !evt.detail.isError) {
+                    window.location.href = '/contacts';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+{{ end }}
+
+{{ block "form" . }}
+<form hx-swap="outerHTML" hx-post="/contacts" class="space-y-md" role="form" aria-labelledby="form-title">
+    <div class="form-group">
+        <label for="name" class="form-label">Name</label>
+        <input
+            id="name"
+            {{ if .Values.name }} value="{{ .Values.name }}" {{ end }}
+            type="text"
+            name="name"
+            class="form-input"
+            required
+            aria-describedby="name-error"
+            placeholder="Enter contact name"
+        />
+    </div>
+    <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+            id="email"
+            {{ if .Values.email }} value="{{ .Values.email }}" {{ end }}
+            type="email"
+            name="email"
+            class="form-input"
+            required
+            aria-describedby="email-error"
+            placeholder="Enter contact email"
+        />
+        {{ if .Errors.email }}
+            <div id="email-error" class="form-error" role="alert">{{ .Errors.email }}</div>
+        {{ end }}
+    </div>
+    <button type="submit" class="btn" aria-label="Submit contact form">Create Contact</button>
+</form>
+{{ end }}
+
+{{ block "oob-contact" . }}
+<div id="contacts" hx-swap-oob="afterbegin">
+    {{ template "contact" . }}
+</div>
+{{ end }}

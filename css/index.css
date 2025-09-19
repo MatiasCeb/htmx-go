@@ -320,6 +320,7 @@ a:focus {
   background-color: var(--color-background);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) 0;
+  margin-top: var(--spacing-lg);
 }
 
 .nav-list {
@@ -534,6 +535,16 @@ a:focus {
 .p-md { padding: var(--spacing-md); }
 .m-lg { margin: var(--spacing-lg); }
 .p-lg { padding: var(--spacing-lg); }
+
+/* ========================================
+   COMPONENT: HERO SECTION
+   ========================================
+   Styling for the hero section.
+   ======================================== */
+.hero-section {
+  padding: var(--spacing-3xl) 0;
+  margin-top: var(--spacing-lg);
+}
 
 /* ========================================
    DARK MODE SUPPORT (OPTIONAL)
