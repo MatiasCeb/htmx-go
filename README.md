@@ -2,6 +2,10 @@
 
 A modern web application for managing contacts built with Go and HTMX, featuring a clean, minimalist design inspired by Apple's interface philosophy.
 
+## Live Demo
+
+The application is live and accessible at: [https://htmx-go.erp.homme.ar/](https://htmx-go.erp.homme.ar/)
+
 ## Features
 
 - **Contact Management**: Add, view, and delete contacts with real-time updates
